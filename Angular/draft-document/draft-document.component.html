@@ -1,0 +1,58 @@
+<form [formGroup]="draftDocumentFg">
+    <div formArrayName="DocumentDraftSections" style="padding-right: 5px; padding-left: 5px;">
+        <mat-accordion class="example-headers-align">
+            <div *ngFor="let item of DraftDocumentSections.controls; let  documentHeadingIndex = index"
+                [formGroupName]="documentHeadingIndex" fxLayout="column" fxLayoutAlign="start stretch"
+                fxLayoutGap="8px">
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Headline: {{getHeadingText(documentHeadingIndex)}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <mat-icon>draft</mat-icon>
+                            Section Draft: {{getDraftText(documentHeadingIndex) | slice:0:30}}
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+                        <div fxLayout="row" fxLayoutGap="5px">
+                            <mat-form-field appearance="fill" fxFlex="1 1 auto">
+                                <mat-label>Headline #{{getHeadingText(documentHeadingIndex)}}</mat-label>
+                                <input matInput placeholder="Document Heading" formControlName="DraftHeading">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Word Lenght Count</mat-label>
+                                <input type="number" matInput placeholder="Word Lenght"
+                                    formControlName="WordLenghtCount">
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="fill" fxFlex="1 1 auto">
+                            <mat-label>Additional Heading Information (optional) </mat-label>
+                            <input matInput placeholder="" formControlName="Context">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill" fxFlex="1 1 auto">
+                            <mat-label>Draft Section #{{getHeadingText(documentHeadingIndex)}}</mat-label>
+                            <div *ngIf="showSectionDraftDocumentLoader" fxLayout="column" fxLayoutAlign="start center">
+                                <mat-progress-spinner fxFlex="1 1 auto" diameter="60"
+                                    mode="indeterminate"></mat-progress-spinner>
+                                <h2 fxFlex="1 1 auto">Loading Draft Content...</h2>
+                            </div>
+                            <textarea formControlName="Text" matInput cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"
+                                cdkAutosizeMaxRows="200"></textarea>
+                        </mat-form-field>
+                        <button type="button" class="save-button" mat-flat-button color="primary"
+                            (click)="generateContentForSection(documentHeadingIndex)">
+                            Generate Draft For Section {{getHeadingText(documentHeadingIndex)}}
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </mat-accordion>
+
+    </div>
+</form>
