@@ -13,6 +13,8 @@
     "Database": "SampleDB5",
     "Container": "SampleContainer3",
     "PartitionKeyPath": "/categoryId",
+    "WriteMode": "upsert",
+    "MaxRetryCount": 5
   },
   "Operations": [
     //{
